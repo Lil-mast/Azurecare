@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzureCare Haven</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        /* ---- Poetic Blue/White Theme ---- */
+        :root {
+            --sky-gleam: #f8fbfe;
+            --deep-sapphire: #1a4b8c;
+            --foam-crest: #a8d8ea;
+            --wave-shadow: rgba(23, 92, 147, 0.1);
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(160deg, var(--sky-gleam) 60%, var(--foam-crest) 100%);
+            color: var(--deep-sapphire);
+            overflow-x: hidden;
+        }
+
+        /* ---- Animated Wave Header ---- */
+        .wave-header {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%231a4b8c" opacity=".1"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%231a4b8c" opacity=".3"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%231a4b8c"/></svg>');
+            background-size: 1200px 100px;
+            animation: wave 12s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.7;
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: -2s;
+            opacity: 0.4;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1200px; }
+        }
+
+        /* ---- Hero Section ---- */
+        .hero {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin: 0;
+            background: linear-gradient(90deg, var(--deep-sapphire), #3a7bd5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 10px var(--wave-shadow);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+
+        /* ---- Floating Search Box ---- */
+        .search-container {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--wave-shadow);
+            width: 70%;
+            margin: 40px auto;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .search-box {
+            display: flex;
+            border: 2px solid var(--foam-crest);
+            border-radius: 50px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:hover {
+            box-shadow: 0 5px 15px var(--wave-shadow);
+            transform: translateY(-3px);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .search-box button {
+            background: var(--deep-sapphire);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-box button:hover {
+            background: #0f3a6e;
+        }
+
+        /* ---- Pulsing Map Nodes ---- */
+        .map-preview {
+            width: 500px;
+            height: 300px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--wave-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .node {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--deep-sapphire);
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 0.7;
+        }
+
+        .node::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--deep-sapphire);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* ---- Chatbot Button ---- */
+        .chatbot-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: var(--deep-sapphire);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px var(--wave-shadow);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .chatbot-btn i {
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        /* ---- Chatbot Modal ---- */
+        .chatbot-modal {
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--wave-shadow);
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-modal.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .chat-header {
+            background: var(--deep-sapphire);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            height: 380px;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message {
+            background: var(--foam-crest);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background: var(--deep-sapphire);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: 1px solid var(--foam-crest);
+            border-radius: 20px;
+            padding: 10px 15px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: var(--deep-sapphire);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Wave Background -->
+    <div class="wave-header">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        
+        <!-- Hero Content -->
+        <div class="hero">
+            <h1>AzureCare Haven</h1>
+            <p>Where the path to care is as clear as the horizon.</p>
+            
+            <!-- Search Box -->
+            <div class="search-container" id="searchBox">
+                <div class="search-box">
+                    <input type="text" placeholder="Search by symptom, specialty, or location...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <!-- Pulsing Map Preview -->
+            <div class="map-preview" id="mapPreview">
+                <!-- Nodes will be added via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chatbot Button -->
+    <div class="chatbot-btn" id="chatbotBtn">
+        <i class="fas fa-comment-medical"></i>
+    </div>
+    
+    <!-- Chatbot Modal -->
+    <div class="chatbot-modal" id="chatbotModal">
+        <div class="chat-header">
+            <i class="fas fa-sparkle" style="margin-right: 8px;"></i> Lumi - Your Care Guide
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! I'm Lumi, your luminous guide. How can I help you find care today?
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type your question...">
+            <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <script>
+        // GSAP Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero text animation
+            gsap.from('.hero h1', { 
+                duration: 1.5, 
+                y: -50, 
+                opacity: 0, 
+                ease: 'power3.out' 
+            });
+            
+            gsap.from('.hero p', { 
+                duration: 1.5, 
+                y: 30, 
+                opacity: 0, 
+                delay: 0.3, 
+                ease: 'power3.out' 
+            });
+            
+            // Search box animation
+            gsap.to('#searchBox', { 
+                duration: 1, 
+                y: 0, 
+                opacity: 1, 
+                delay: 0.6, 
+                ease: 'elastic.out(1, 0.5)' 
+            });
+            
+            // Create pulsing map nodes
+            const map = document.getElementById('mapPreview');
+            for (let i = 0; i < 12; i++) {
+                const node = document.createElement('div');
+                node.classList.add('node');
+                node.style.left = `${Math.random() * 90}%`;
+                node.style.top = `${Math.random() * 90}%`;
+                map.appendChild(node);
+                
+                // Animate nodes with random delays
+                gsap.to(node, { 
+                    scale: 1, 
+                    duration: 1, 
+                    delay: 0.8 + (i * 0.1), 
+                    ease: 'back.out(2)' 
+                });
+            }
+            
+            // Chatbot toggle
+            const chatbotBtn = document.getElementById('chatbotBtn');
+            const chatbotModal = document.getElementById('chatbotModal');
+            
+            chatbotBtn.addEventListener('click', () => {
+                chatbotModal.classList.toggle('active');
+                
+                if (chatbotModal.classList.contains('active')) {
+                    gsap.from(chatbotModal, { 
+                        duration: 0.5, 
+                        y: 20, 
+                        opacity: 0, 
+                        ease: 'back.out(1.4)' 
+                    });
+                }
+            });
+            
+            // Chatbot functionality
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            const sendBtn = document.getElementById('sendBtn');
+            
+            function addMessage(text, isUser = false) {
+                const message = document.createElement('div');
+                message.classList.add('message');
+                message.classList.add(isUser ? 'user-message' : 'bot-message');
+                message.textContent = text;
+                chatMessages.appendChild(message);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Animate new message
+                gsap.from(message, { 
+                    duration: 0.3, 
+                    y: 10, 
+                    opacity: 0, 
+                    ease: 'power1.out' 
+                });
+            }
+            
+            function handleUserInput() {
+                const text = userInput.value.trim();
+                if (text === '') return;
+                
+                addMessage(text, true);
+                userInput.value = '';
+                
+                // Simulate bot response after delay
+                setTimeout(() => {
+                    const responses = [
+                        "Like a tide retreating to reveal answers, I found 3 clinics near you that can help. Would you like directions?",
+                        "Even the deepest waves settle. Let me guide you to calm waters of care.",
+                        "I'm checking the medical constellations for you... Ah! Dr. Marina has availability tomorrow.",
+                        "Your health journey matters. Here's what I recommend based on your symptoms:",
+                        "The shores of care are near. You'll be okay. 💙"
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse);
+                }, 1000);
+            }
+            
+            sendBtn.addEventListener('click', handleUserInput);
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleUserInput();
+            });
+        });
+    </script>
+</body>
+</html>

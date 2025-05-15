@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AzureCare Haven</title>
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AzureCare Haven - Your path to clear and compassionate healthcare in Kenya. Search by symptom to find healing options, specialists, and connect with top Kenyan hospitals." />
+    <meta name="keywords" content="healthcare, medical, Kenya hospitals, symptoms, specialists, chatbot, care guide, yellow pages" />
+    <meta name="author" content="AzureCare Team" />
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <!-- React and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.6/babel.min.js"></script>
+    <style>
+        /* ---- Poetic Blue/White Theme ---- */
+        :root {
+            --sky-gleam: #f8fbfe;
+            --deep-sapphire: #1a4b8c;
+            --foam-crest: #a8d8ea;
+            --wave-shadow: rgba(23, 92, 147, 0.1);
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(160deg, var(--sky-gleam) 60%, var(--foam-crest) 100%);
+            color: var(--deep-sapphire);
+            overflow-x: hidden;
+        }
+
+        /* ---- Animated Wave Header ---- */
+        .wave-header {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%231a4b8c" opacity=".1"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%231a4b8c" opacity=".3"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%231a4b8c"/></svg>');
+            background-size: 1200px 100px;
+            animation: wave 12s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.7;
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: -2s;
+            opacity: 0.4;
+        }
+
+        @keyframes wave {
+            0% {
+                background-position-x: 0;
+            }
+            100% {
+                background-position-x: 1200px;
+            }
+        }
+
+        /* ---- Pulsing Map Nodes ---- */
+        .map-preview {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--wave-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .node {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--deep-sapphire);
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 0.7;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .node:hover {
+            background-color: #3a7bd5;
+        }
+
+        .node::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--deep-sapphire);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* ---- Chatbot Button ---- */
+        .chatbot-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: var(--deep-sapphire);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px var(--wave-shadow);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* ---- Responsive Adjustments ---- */
+        @media (max-width: 600px) {
+            .map-preview {
+                height: 200px;
+                margin: 30px auto;
+            }
+            .chatbot-btn {
+                width: 60px;
+                height: 60px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- React Root -->
+    <div id="root"></div>
+
+    <script type="text/jsx">
+        // React Components
+        const Hero = () => (
+            <div className="wave-header" role="banner">
+                <div className="wave"></div>
+                <div className="wave"></div>
+                <div className="wave"></div>
+                <main className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10" role="main">
+                    <h1 className="font-['Playfair_Display'] text-6xl md:text-7xl m-0 bg-gradient-to-r from-[#1a4b8c] to-[#3a7bd5] bg-clip-text text-transparent drop-shadow-[2px_2px_10px_rgba(23,92,147,0.1)]">
+                        AzureCare Haven
+                    </h1>
+                    <p className="text-xl md:text-2xl max-w-xl md:max-w-2xl mx-auto mt-5">
+                        Your trusted guide to healthcare in Kenya. Search symptoms to find healing options and connect with specialists and hospitals.
+                    </p>
+                </main>
+            </div>
+        );
+
+        const SearchBox = () => {
+            const [query, setQuery] = React.useState('');
+            const [results, setResults] = React.useState([]);
+
+            const symptomsData = [
+                {
+                    symptom: 'Chest Pain',
+                    conditions: ['Heart Attack', 'Angina', 'Acid Reflux'],
+                    healing: 'Seek emergency care for possible heart issues; antacids for reflux.',
+                    advice: 'Immediate care if severe or with shortness of breath.',
+                    specialist: 'Cardiologist - Dr. Aisha Mwangi (aisha.mwangi@azurecare.org)',
+                },
+                {
+                    symptom: 'Persistent Headache',
+                    conditions: ['Migraine', 'Tension Headache', 'Brain Tumor'],
+                    healing: 'Pain relievers for migraines; imaging for severe cases.',
+                    advice: 'Consult if frequent or with neurological symptoms.',
+                    specialist: 'Neurologist - Dr. James Okoro (james.okoro@azurecare.org)',
+                },
+                {
+                    symptom: 'Fever in Children',
+                    conditions: ['Viral Infection', 'Bacterial Infection', 'Malaria'],
+                    healing: 'Antipyretics like paracetamol; antimalarials if confirmed.',
+                    advice: 'Monitor temperature; seek care if high (>38°C) or persistent.',
+                    specialist: 'Pediatrician - Dr. Sarah Kimani (sarah.kimani@azurecare.org)',
+                },
+                {
+                    symptom: 'Joint Pain',
+                    conditions: ['Arthritis', 'Injury', 'Autoimmune Disease'],
+                    healing: 'Anti-inflammatory drugs; physical therapy for injuries.',
+                    advice: 'See a specialist if pain limits movement or persists.',
+                    specialist: 'Orthopedist - Dr. Michael Adebayo (michael.adebayo@azurecare.org)',
+                },
+                {
+                    symptom: 'Shortness of Breath',
+                    conditions: ['Asthma', 'Pneumonia', 'Heart Failure'],
+                    healing: 'Inhalers for asthma; antibiotics for pneumonia.',
+                    advice: 'Urgent care needed if sudden or worsening.',
+                    specialist: 'Pulmonologist - Dr. Esther Wanjiku (esther.wanjiku@azurecare.org)',
+                },
+                {
+                    symptom: 'Abdominal Pain',
+                    conditions: ['Appendicitis', 'Gastritis', 'Kidney Stones'],
+                    healing: 'Surgery for appendicitis; antacids for gastritis.',
+                    advice: 'Seek care if severe, persistent, or with fever/vomiting.',
+                    specialist: 'Gastroenterologist - Dr. Peter Njoroge (peter.njoroge@azurecare.org)',
+                },
+            ];
+
+            const handleSearch = () => {
+                if (query.trim() === '') {
+                    setResults([]);
+                    return;
+                }
+
+                const filteredResults = symptomsData.filter((item) =>
+                    item.symptom.toLowerCase().includes(query.toLowerCase()) ||
+                    item.conditions.some((condition) => condition.toLowerCase().includes(query.toLowerCase()))
+                );
+
+                setResults(filteredResults);
+            };
+
+            React.useEffect(() => {
+                handleSearch();
+            }, [query]);
+
+            return (
+                <div className="bg-white p-6 rounded-3xl shadow-[0_10px_30px_rgba(23,92,147,0.1)] w-11/12 max-w-2xl mx-auto mt-10 opacity-0 translate-y-5" id="searchBox">
+                    <div className="flex border-2 border-[#a8d8ea] rounded-full overflow-hidden hover:shadow-[0_5px_15px_rgba(23,92,147,0.1)] hover:-translate-y-1 transition-all duration-300" role="search">
+                        <input
+                            type="text"
+                            className="flex-1 border-none p-4 text-lg outline-none"
+                            placeholder="Search by symptom (e.g., Chest Pain, Headache)..."
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            aria-label="Search by symptom"
+                        />
+                        <button
+                            className="bg-[#1a4b8c] text-white border-none px-6 hover:bg-[#0f3a6e] transition-all duration-300"
+                            onClick={handleSearch}
+                            aria-label="Search"
+                        >
+                            <i className="fas fa-search"></i>
+                        </button>
+                    </div>
+                    {results.length > 0 && (
+                        <div className="mt-6 p-4 bg-[#f8fbfe] rounded-2xl shadow-[0_5px_15px_rgba(23,92,147,0.1)]">
+                            <h3 className="text-2xl font-semibold text-[#1a4b8c] mb-4">Search Results</h3>
+                            {results.map((result, index) => (
+                                <div key={index} className="mb-4">
+                                    <p><strong>Symptom:</strong> {result.symptom}</p>
+                                    <p><strong>Possible Conditions:</strong> {result.conditions.join(', ')}</p>
+                                    <p><strong>Healing Options:</strong> {result.healing}</p>
+                                    <p><strong>Advice:</strong> {result.advice}</p>
+                                    <p><strong>Specialist:</strong> {result.specialist}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {query.trim() !== '' && results.length === 0 && (
+                        <div className="mt-6 p-4 bg-[#f8fbfe] rounded-2xl shadow-[0_5px_15px_rgba(23,92,147,0.1)]">
+                            <p>No results found for "{query}". Try another symptom, like "Chest Pain" or "Headache".</p>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const MapPreview = () => {
+            React.useEffect(() => {
+                const map = document.getElementById('mapPreview');
+                for (let i = 0; i < 12; i++) {
+                    const node = document.createElement('div');
+                    node.classList.add('node');
+                    node.style.left = `${Math.random() * 90}%`;
+                    node.style.top = `${Math.random() * 90}%`;
+                    node.setAttribute('tabindex', '0');
+                    node.setAttribute('aria-label', `Healthcare node ${i + 1}`);
+                    map.appendChild(node);
+
+                    gsap.to(node, {
+                        scale: 1,
+                        duration: 1,
+                        delay: 0.8 + i * 0.1,
+                        ease: 'back.out(2)',
+                    });
+                }
+            }, []);
+
+            return (
+                <div
+                    className="map-preview"
+                    id="mapPreview"
+                    aria-label="Map preview with healthcare nodes"
+                    role="region"
+                    tabIndex={0}
+                ></div>
+            );
+        };
+
+        const HospitalApps = () => (
+            <section className="max-w-2xl mx-auto my-12 p-6 bg-white rounded-3xl shadow-[0_10px_30px_rgba(23,92,147,0.1)] text-center" aria-label="Kenya Hospital Directory">
+                <h2 className="font-['Playfair_Display'] text-4xl mb-8 text-[#1a4b8c]">Kenya Hospital Directory</h2>
+                <p className="mb-6">Explore top hospitals in Kenya, visit their websites, and access mobile apps for care.</p>
+                <div className="grid gap-6 md:grid-cols-2">
+                    {[
+                        {
+                            name: 'Aga Khan University Hospital',
+                            website: 'https://hospitals.aku.edu/nairobi/Pages/default.aspx',
+                            app: 'AKUH Mobile (iOS: https://apps.apple.com/app/akuh-mobile/id1234567890, Android: https://play.google.com/store/apps/details?id=com.akuh.mobile)',
+                            description: 'Premier hospital offering cardiology, oncology, and advanced diagnostics.',
+                        },
+                        {
+                            name: 'Nairobi Hospital',
+                            website: 'https://thenairobihospital.org/',
+                            app: 'Nairobi Hosp App (iOS: https://apps.apple.com/app/nairobi-hosp/id987654321, Android: https://play.google.com/store/apps/details?id=org.nairobihosp.app)',
+                            description: 'Known for specialized surgeries and comprehensive outpatient services.',
+                        },
+                        {
+                            name: 'Kenyatta National Hospital',
+                            website: 'https://knh.or.ke/',
+                            app: 'KNH Connect (iOS: https://apps.apple.com/app/knh-connect/id1122334455, Android: https://play.google.com/store/apps/details?id=ke.knh.connect)',
+                            description: 'Largest public hospital with trauma care and teaching facilities.',
+                        },
+                        {
+                            name: 'Mater Misericordiae Hospital',
+                            website: 'https://www.materkenya.com/',
+                            app: 'MaterCare (iOS: https://apps.apple.com/app/matercare/id1357924680, Android: https://play.google.com/store/apps/details?id=com.mater.care)',
+                            description: 'Catholic hospital excelling in pediatrics and maternity care.',
+                        },
+                        {
+                            name: 'MP Shah Hospital',
+                            website: 'https://www.mpshahhosp.org/',
+                            app: 'MP Shah Health (iOS: https://apps.apple.com/app/mp-shah-health/id1467891234, Android: https://play.google.com/store/apps/details?id=org.mpshah.health)',
+                            description: 'Offers neurology, orthopedics, and cancer treatment.',
+                        },
+                    ].map((hospital) => (
+                        <div key={hospital.name} className="p-4 bg-[#f8fbfe] rounded-2xl shadow-[0_5px_15px_rgba(23,92,147,0.1)]">
+                            <h3 className="text-2xl font-semibold text-[#1a4b8c]">{hospital.name}</h3>
+                            <p className="mt-2">{hospital.description}</p>
+                            <button
+                                className="mt-4 bg-[#1a4b8c] text-white px-4 py-2 rounded-full hover:bg-[#0f3a6e] transition-all duration-300"
+                                onClick={() => window.open(hospital.website, '_blank')}
+                                aria-label={`Visit ${hospital.name} website`}
+                            >
+                                Visit Website
+                            </button>
+                            <p className="mt-2"><strong>App:</strong> {hospital.app}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        );
+
+        const SpecialistsSection = () => (
+            <section className="max-w-2xl mx-auto my-12 p-6 bg-white rounded-3xl shadow-[0_10px_30px_rgba(23,92,147,0.1)]" aria-label="Specialists">
+                <h2 className="font-['Playfair_Display'] text-4xl mb-8 text-[#1a4b8c] text-center">Our Specialists</h2>
+                <div className="grid gap-6 md:grid-cols-2">
+                    {[
+                        {
+                            name: 'Dr. Aisha Mwangi',
+                            specialty: 'Cardiology',
+                            bio: 'Expert in heart conditions with 15 years of experience, specializing in hypertension and heart failure.',
+                            contact: 'aisha.mwangi@azurecare.org',
+                        },
+                        {
+                            name: 'Dr. James Okoro',
+                            specialty: 'Neurology',
+                            bio: 'Renowned for treating epilepsy and stroke, with a focus on personalized neurological care.',
+                            contact: 'james.okoro@azurecare.org',
+                        },
+                        {
+                            name: 'Dr. Sarah Kimani',
+                            specialty: 'Pediatrics',
+                            bio: 'Dedicated to child health, offering expertise in infectious diseases and developmental disorders.',
+                            contact: 'sarah.kimani@azurecare.org',
+                        },
+                        {
+                            name: 'Dr. Michael Adebayo',
+                            specialty: 'Orthopedics',
+                            bio: 'Specializes in joint replacements and sports injuries, helping patients regain mobility.',
+                            contact: 'michael.adebayo@azurecare.org',
+                        },
+                        {
+                            name: 'Dr. Esther Wanjiku',
+                            specialty: 'Pulmonology',
+                            bio: 'Focuses on respiratory issues like asthma and COPD, with advanced diagnostic skills.',
+                            contact: 'esther.wanjiku@azurecare.org',
+                        },
+                        {
+                            name: 'Dr. Peter Njoroge',
+                            specialty: 'Gastroenterology',
+                            bio: 'Treats digestive disorders, with expertise in endoscopy and liver disease management.',
+                            contact: 'peter.njoroge@azurecare.org',
+                        },
+                    ].map((specialist) => (
+                        <div key={specialist.name} className="p-4 bg-[#f8fbfe] rounded-2xl shadow-[0_5px_15px_rgba(23,92,147,0.1)]">
+                            <h3 className="text-2xl font-semibold text-[#1a4b8c]">{specialist.name}</h3>
+                            <p className="text-lg font-medium">{specialist.specialty}</p>
+                            <p className="mt-2">{specialist.bio}</p>
+                            <p className="mt-2 text-[#3a7bd5]"><a href={`mailto:${specialist.contact}`}>{specialist.contact}</a></p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        );
+
+        const SymptomsSection = () => (
+            <section className="max-w-2xl mx-auto my-12 p-6 bg-white rounded-3xl shadow-[0_10px_30px_rgba(23,92,147,0.1)]" aria-label="Symptoms Guide">
+                <h2 className="font-['Playfair_Display'] text-4xl mb-8 text-[#1a4b8c] text-center">Symptoms Guide</h2>
+                <p className="text-center mb-6">Explore common symptoms, possible conditions, and when to seek care in Kenya.</p>
+                <div className="grid gap-6 md:grid-cols-2">
+                    {[
+                        {
+                            symptom: 'Chest Pain',
+                            conditions: ['Heart Attack', 'Angina', 'Acid Reflux'],
+                            healing: 'Seek emergency care for possible heart issues; antacids for reflux.',
+                            advice: 'Immediate care if severe or with shortness of breath.',
+                            specialist: 'Cardiologist',
+                        },
+                        {
+                            symptom: 'Persistent Headache',
+                            conditions: ['Migraine', 'Tension Headache', 'Brain Tumor'],
+                            healing: 'Pain relievers for migraines; imaging for severe cases.',
+                            advice: 'Consult if frequent or with neurological symptoms.',
+                            specialist: 'Neurologist',
+                        },
+                        {
+                            symptom: 'Fever in Children',
+                            conditions: ['Viral Infection', 'Bacterial Infection', 'Malaria'],
+                            healing: 'Antipyretics like paracetamol; antimalarials if confirmed.',
+                            advice: 'Monitor temperature; seek care if high (>38°C) or persistent.',
+                            specialist: 'Pediatrician',
+                        },
+                        {
+                            symptom: 'Joint Pain',
+                            conditions: ['Arthritis', 'Injury', 'Autoimmune Disease'],
+                            healing: 'Anti-inflammatory drugs; physical therapy for injuries.',
+                            advice: 'See a specialist if pain limits movement or persists.',
+                            specialist: 'Orthopedist',
+                        },
+                        {
+                            symptom: 'Shortness of Breath',
+                            conditions: ['Asthma', 'Pneumonia', 'Heart Failure'],
+                            healing: 'Inhalers for asthma; antibiotics for pneumonia.',
+                            advice: 'Urgent care needed if sudden or worsening.',
+                            specialist: 'Pulmonologist',
+                        },
+                        {
+                            symptom: 'Abdominal Pain',
+                            conditions: ['Appendicitis', 'Gastritis', 'Kidney Stones'],
+                            healing: 'Surgery for appendicitis; antacids for gastritis.',
+                            advice: 'Seek care if severe, persistent, or with fever/vomiting.',
+                            specialist: 'Gastroenterologist',
+                        },
+                    ].map((symptom) => (
+                        <div key={symptom.symptom} className="p-4 bg-[#f8fbfe] rounded-2xl shadow-[0_5px_15px_rgba(23,92,147,0.1)]">
+                            <h3 className="text-2xl font-semibold text-[#1a4b8c]">{symptom.symptom}</h3>
+                            <p><strong>Possible Conditions:</strong> {symptom.conditions.join(', ')}</p>
+                            <p><strong>Healing Options:</strong> {symptom.healing}</p>
+                            <p><strong>Advice:</strong> {symptom.advice}</p>
+                            <p><strong>Specialist:</strong> {symptom.specialist}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        );
+
+        const Chatbot = () => {
+            const [isOpen, setIsOpen] = React.useState(false);
+            const [messages, setMessages] = React.useState([
+                { text: "Hello! I'm Lumi, your luminous guide. Type a symptom like 'Chest Pain' to find care options in Kenya.", isUser: false },
+            ]);
+            const [input, setInput] = React.useState('');
+            const messagesEndRef = React.useRef(null);
+
+            const toggleChatbot = () => {
+                setIsOpen(!isOpen);
+            };
+
+            const handleInput = () => {
+                if (input.trim() === '') return;
+
+                const newMessages = [...messages, { text: input, isUser: true }];
+                setMessages(newMessages);
+                setInput('');
+
+                const symptomsData = [
+                    {
+                        symptom: 'chest pain',
+                        response: 'Chest pain can be serious. It might indicate a heart attack or angina. I recommend seeing Dr. Aisha Mwangi, our cardiologist at Aga Khan University Hospital. Visit their website for more details. Need directions?',
+                    },
+                    {
+                        symptom: 'headache',
+                        response: 'Persistent headaches could be migraines or more. Dr. James Okoro, our neurologist at Nairobi Hospital, can help. Check their website or download Nairobi Hosp App. Want to contact him?',
+                    },
+                    {
+                        symptom: 'fever',
+                        response: 'A fever in children needs monitoring. Dr. Sarah Kimani at Mater Misericordiae Hospital specializes in pediatrics. See their website or use MaterCare app. Need an appointment?',
+                    },
+                    {
+                        symptom: 'joint pain',
+                        response: 'Joint pain might suggest arthritis or injury. Dr. Michael Adebayo at MP Shah Hospital is our orthopedist. Visit their website or use MP Shah Health app. Shall I connect you?',
+                    },
+                    {
+                        symptom: 'breath',
+                        response: 'Shortness of breath is urgent. It could be asthma or heart-related. Dr. Esther Wanjiku at Kenyatta National Hospital can assist. Go to their website or use KNH Connect app. Need urgent care details?',
+                    },
+                    {
+                        symptom: 'abdominal',
+                        response: 'Abdominal pain could be appendicitis or gastritis. Dr. Peter Njoroge at Nairobi Hospital has expertise. Visit their website or their app. Want to arrange a visit?',
+                    },
+                ];
+
+                setTimeout(() => {
+                    const userInputLower = input.toLowerCase();
+                    const matchedResponse = symptomsData.find((item) =>
+                        userInputLower.includes(item.symptom)
+                    ) || {
+                        response: 'I’m here to help! Could you share a specific symptom like "Chest Pain" or "Headache"? I’ll find the right specialist and hospital in Kenya for you.',
+                    };
+
+                    setMessages((prev) => [...prev, { text: matchedResponse.response, isUser: false }]);
+                }, 1000);
+            };
+
+            React.useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+                if (isOpen) {
+                    gsap.from('#chatbotModal', {
+                        duration: 0.5,
+                        y: 20,
+                        opacity: 0,
+                        ease: 'back.out(1.4)',
+                    });
+                }
+            }, [messages, isOpen]);
+
+            return (
+                <>
+                    <button
+                        className="chatbot-btn"
+                        onClick={toggleChatbot}
+                        aria-label="Open chat with Lumi, your care guide"
+                        tabIndex={0}
+                    >
+                        <i className="fas fa-comment-medical text-2xl text-white" aria-hidden="true"></i>
+                    </button>
+                    <section
+                        id="chatbotModal"
+                        className={`fixed bottom-32 right-4 w-11/12 max-w-sm h-[500px] bg-white rounded-3xl shadow-[0_10px_30px_rgba(23,92,147,0.1)] overflow-hidden flex flex-col transition-all duration-300 ${
+                            isOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-5 pointer-events-none'
+                        }`}
+                        aria-live="polite"
+                        aria-label="Chatbot conversation window"
+                        role="dialog"
+                        aria-modal="true"
+                    >
+                        <div className="bg-[#1a4b8c] text-white p-4 text-center font-bold flex items-center justify-center">
+                            <i className="fas fa-sparkle mr-2" aria-hidden="true"></i>
+                            Lumi - Your Care Guide
+                        </div>
+                        <div className="flex-1 p-4 overflow-y-auto flex flex-col" id="chatMessages" tabIndex={0}>
+                            {messages.map((msg, index) => (
+                                <div
+                                    key={index}
+                                    className={`message mb-4 max-w-[80%] p-3 rounded-2xl animate-[fadeIn_0.3s_ease] ${
+                                        msg.isUser
+                                            ? 'bg-[#1a4b8c] text-white self-end rounded-br-md'
+                                            : 'bg-[#a8d8ea] self-start rounded-bl-md'
+                                    }`}
+                                >
+                                    {msg.text}
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+                        <div className="flex p-3 border-t border-[#eee]">
+                            <input
+                                type="text"
+                                className="flex-1 border border-[#a8d8ea] rounded-full p-3 outline-none focus:border-[#1a4b8c] focus:shadow-[0_0_5px_#1a4b8c]"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyPress={(e) => e.key === 'Enter' && handleInput()}
+                                aria-label="Type your question"
+                                placeholder="Type your question..."
+                            />
+                            <button
+                                className="bg-[#1a4b8c] text-white border-none rounded-full w-10 h-10 ml-3 flex items-center justify-center hover:bg-[#0f3a6e] transition-all duration-300"
+                                onClick={handleInput}
+                                aria-label="Send message"
+                            >
+                                <i className="fas fa-paper-plane" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </section>
+                </>
+            );
+        };
+
+        const App = () => (
+            <div>
+                <Hero />
+                <SearchBox />
+                <MapPreview />
+                <HospitalApps />
+                <SpecialistsSection />
+                <SymptomsSection />
+                <Chatbot />
+            </div>
+        );
+
+        // Render React App
+        ReactDOM.render(<App />, document.getElementById('root'));
+
+        // GSAP Animations
+        gsap.from('.hero h1', {
+            duration: 1.5,
+            y: -50,
+            opacity: 0,
+            ease: 'power3.out',
+        });
+
+        gsap.from('.hero p', {
+            duration: 1.5,
+            y: 30,
+            opacity: 0,
+            delay: 0.3,
+            ease: 'power3.out',
+        });
+
+        gsap.to('#searchBox', {
+            duration: 1,
+            y: 0,
+            opacity: 1,
+            delay: 0.6,
+            ease: 'elastic.out(1, 0.5)',
+        });
+    </script>
+</body>
+</html>
