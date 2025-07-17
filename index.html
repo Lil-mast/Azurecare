@@ -1,0 +1,160 @@
+<html><head>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Public+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<title>Azurecare Dashboard</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="emerald-blue-theme">
+<div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden" style='font-family: "Public Sans", "Noto Sans", sans-serif;'>
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid px-6 md:px-10 py-4 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-[#111817]">
+<div class="size-7 brand-icon">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h1 class="brand-text text-2xl font-bold leading-tight tracking-[-0.015em]">Azurecare</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium leading-normal py-2 nav-link-active" href="#">Home</a>
+<a class="text-sm font-medium leading-normal py-2" href="#">Directory</a>
+<a class="text-sm font-medium leading-normal py-2" href="#">Resources</a>
+<a class="text-sm font-medium leading-normal py-2" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="search-icon-container flex items-center justify-center pl-3 rounded-l-lg border-r-0" data-icon="MagnifyingGlass" data-size="20px" data-weight="regular">
+<svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-sm focus:outline-0 focus:ring-0 border-none h-full placeholder:text-inherit px-3 text-base font-normal leading-normal" placeholder="Search" value=""/>
+</div>
+</label>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 secondary-button">
+<div data-icon="Bell" data-size="20px" data-weight="regular">
+<svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path>
+</svg>
+</div>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-white shadow-md" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCR_H-gwqIziautce1ymESeQFIHOLmjbTgkq25fnrOFKxHfXHItrpztiRBHSokedqKMSuYFmd8JfJ51r18oesnQ5CXvKysDFLVTQUf_CWTSq-fEDkwiHuhFVZuzzXiJmQeyZbZK8YHgg9wvbtn068PQjBIAEzzShcNdWT_7YeXUm-qG7-iWTqC453wbR_tsawel5bOJdHKfWBAEbOoMBT4rFYdOt5PhQJnYpvEp8NacIIY22F3PDfaJQxUkszDXsUhbc-GlPvZABr8");'></div>
+<button class="md:hidden flex items-center justify-center rounded-lg h-10 w-10 secondary-button">
+<svg fill="currentColor" height="24px" viewBox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+</button>
+</div>
+</header>
+<main class="px-6 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col w-full max-w-screen-xl">
+<div class="flex flex-wrap justify-between items-center gap-4 p-4 mb-6">
+<h1 class="text-3xl md:text-4xl font-bold leading-tight tracking-tight">Welcome to <span class="brand-text">Azurecare</span></h1>
+</div>
+<div class="px-4 py-3 mb-6">
+<label class="flex flex-col min-w-40 h-14 w-full shadow-sm rounded-lg">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="search-icon-container flex items-center justify-center pl-4 rounded-l-lg border-r-0" data-icon="MagnifyingGlass" data-size="24px" data-weight="regular">
+<svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</div>
+<input id="search-input" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-base focus:outline-0 focus:ring-0 border-none h-full placeholder:text-inherit px-4 text-base font-normal leading-normal" placeholder="Search for hospitals, doctors, or symptoms..." value=""/>
+</div>
+</label>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<section class="lg:col-span-2 card p-6 rounded-xl">
+<h2 class="section-title text-xl font-bold leading-tight tracking-[-0.015em] mb-4">Find Nearest Hospital</h2>
+<div class="w-full bg-center bg-no-repeat aspect-[16/10] bg-cover rounded-lg object-cover border border-[var(--border-color)]" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdd6nUryPOVkVIfWRnkdftw3CLyY-aMcMgMVzZiLmSfHdcPfp1DWeBgPO8IOyODOTFR76AnbyGsvai1JExTQTOYivf38YjNfpnxWuN-os8n44_hT5AAvMlozachdTZLOI1oW4O7JT8O7j0TwRJoBlRql86TuzdjD6vmbv1YUZXBLRG_YKQefy_o86daPbrp2bnIZgLs4jDj_wEDbCvDDYi1I3epmEAakQN6T26F7SqDbMgw8o0LQ4_ZABA1NfxYwk43WHi2fSEWOc");'></div>
+</section>
+<section class="card p-6 rounded-xl">
+<h2 class="section-title text-xl font-bold leading-tight tracking-[-0.015em] mb-4">Symptom Checker</h2>
+<div class="flex flex-col gap-4 h-full">
+<textarea id="symptom-input" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border min-h-36 placeholder:text-inherit p-3 text-sm font-normal leading-normal" placeholder="Describe your symptoms (e.g., fever, cough, headache)"></textarea>
+<button id="symptom-button" class="primary-button w-full flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Get Advice</span>
+</button>
+</div>
+</section>
+</div>
+<section class="mb-8">
+<h2 class="section-title text-xl font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 mb-4">Hospital Information</h2>
+<div id="hospital-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 py-3">
+<div class="card flex h-full flex-col gap-4 rounded-xl p-4">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjJBpxWfQjmmVXzkUd_3Q_iHgJpAn4RA6oTgS9VB6ZqyQuLxu3YJHa0HHbY_fRkupO3FtTlLwG2vp3PuTabHlcr4gtlnpU0PtfNwihSvdS3fcTyC6CNoymwdJx_AOunqexk6puFXO6Eoo9MmPreiUR5CWeHpx6SjxLz10ATopQBJ8e8cw3z2Xik0MrZTpEArosMD7Vra8e1Rjs4WY2kzkZQUieKuDH9phS4lB75BEGDg6DuYP_8JqmbdfXnpTOBKfaozvF1qMozFE");'></div>
+<div>
+<p class="text-base font-semibold leading-normal">Nairobi General Hospital</p>
+<p class="text-sm font-normal leading-normal text-[var(--muted-text-color)]">Leading hospital in Nairobi</p>
+</div>
+</div>
+<div class="card flex h-full flex-col gap-4 rounded-xl p-4">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhrva-IXDntThB1YPV8L2Y2-RorHBJoC3yC2D1R_SCigOKtPJfJt_icQcndsp6UNm4DPYb6qBo5qC_TJHTl7NBvrzzFyoRZBeChL0TlPzcqhIZgDfSup-uGcyFQPQ8iWzf7mMAyGTlggGTeURkmToVW0InNVZAJjwglwiTPESbAbK73GW5EHR0_alNNwqqDDobT1qzPLK3sOKlgas8KYhFOpVvbXYJxZV5Cq9lY7b7pWaNMzHqvA4z732cw4YG_Nl3ftJecQAiUrg");'></div>
+<div>
+<p class="text-base font-semibold leading-normal">Aga Khan University Hospital</p>
+<p class="text-sm font-normal leading-normal text-[var(--muted-text-color)]">University hospital with modern facilities</p>
+</div>
+</div>
+<div class="card flex h-full flex-col gap-4 rounded-xl p-4">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVVNntcGJoGnkjT5q-gOH1IopZXl-sXRylJHC642smZNyPi8_8KRkPepK1E1PrEbvYUhlypLRszT_dEFhuS6inGCAkjUYKO8_FN1Y6ZUw3Dk_AHFFfn8nyTw_svZ4hAxLtQdYfnIR962l7cuy_1wU9iKsIU0SVpqPidSpKsvjzVNoU14vZAhHzsPl1YgkAYwdxgcdc3DMAftOHOaVWUak0l6GlKj0rMiFz3WpDq7sIr6qMlKWHlo4mkOPGkrbk-Vth72JKrsqknng");'></div>
+<div>
+<p class="text-base font-semibold leading-normal">Mater Hospital</p>
+<p class="text-sm font-normal leading-normal text-[var(--muted-text-color)]">Hospital with a focus on patient care</p>
+</div>
+</div>
+</div>
+</section>
+<section class="mb-8">
+<h2 class="section-title text-xl font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 mb-4">Disease Outbreak Rates vs. Temperature</h2>
+<div class="card flex flex-col gap-2 rounded-xl border p-6">
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+<div>
+<p class="text-lg font-semibold leading-normal">Outbreak Rates</p>
+<p class="stat-value tracking-light text-4xl font-bold leading-tight">12%</p>
+</div>
+<div class="flex items-center gap-2">
+<p class="text-sm font-normal leading-normal text-[var(--muted-text-color)]">Last 6 Months</p>
+<p class="stat-change-positive text-sm font-medium leading-normal flex items-center">
+<svg class="mr-1" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M200,88H153.37L128,48,102.63,88H56a8,8,0,0,0-5.66,13.66l40,40a8,8,0,0,0,11.32,0l16-16,16,16a8,8,0,0,0,11.32,0l40-40A8,8,0,0,0,200,88Zm-77.37,8L128,90.63,133.37,96ZM192,104.63l-32,32L144,120.59l21.66-21.65a8,8,0,0,0-11.32-11.32L128,113.94l-26.34-26.33a8,8,0,0,0-11.32,11.32L112,120.59,96,136.63l-32-32L72.63,96H96v-.06A8,8,0,0,0,82.34,88H70.21l29.16-29.16a8,8,0,0,0,11.31,0L128,76,145.31,58.84a8,8,0,0,0,11.32,0L185.79,88H173.66a8,8,0,0,0-5.66,13.66L160,112v0l0,.05Z" opacity="0" transform="rotate(180 128 128)"></path><path d="M205.66,133.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,180.69V40a8,8,0,0,1,16,0V180.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z" transform="rotate(45 128 128)"></path></svg>
+                        +2%
+                      </p>
+</div>
+</div>
+<div class="flex min-h-[220px] flex-1 flex-col gap-8 py-4">
+<svg fill="none" height="100%" preserveAspectRatio="xMidYMax meet" viewBox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="var(--primary-color)" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="var(--primary-color)" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<path class="chart-fill" d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z"></path>
+<path class="chart-line" d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="flex justify-around">
+<p class="text-xs font-bold leading-normal tracking-[0.015em] text-[var(--muted-text-color)]">Jan</p>
+<p class="text-xs font-bold leading-normal tracking-[0.015em] text-[var(--muted-text-color)]">Feb</p>
+<p class="text-xs font-bold leading-normal tracking-[0.015em] text-[var(--muted-text-color)]">Mar</p>
+<p class="text-xs font-bold leading-normal tracking-[0.015em] text-[var(--muted-text-color)]">Apr</p>
+<p class="text-xs font-bold leading-normal tracking-[0.015em] text-[var(--muted-text-color)]">May</p>
+<p class="text-xs font-bold leading-normal tracking-[0.015em] text-[var(--muted-text-color)]">Jun</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer class="py-6 px-6 md:px-10 border-t border-solid border-[var(--border-color)] mt-auto">
+<div class="max-w-screen-xl mx-auto text-center text-sm text-[var(--muted-text-color)]">
+                © 2024 Azurecare. All rights reserved.
+            </div>
+</footer>
+</div>
+</div>
+<script src="script.js"></script>
+</body></html>
